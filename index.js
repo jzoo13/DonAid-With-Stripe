@@ -3,7 +3,7 @@
   
     Author: Julio Cuellar
     Spring 2021
-    DonAid - MEAN Full Stack Web Development
+    DonAid - MEAN Full Stack Web Application
 */
 
 const bcrypt = require("bcrypt");
