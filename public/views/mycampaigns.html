@@ -1,0 +1,22 @@
+<div ng-init="load()">
+  <h1 class = "text-center">My Donation Campaigns</h1>
+
+    <!-- my dinamically created divs will go inside the below element -->
+
+      <div id="myDiv"  class="row">
+        <div class="column  mb-4 d-flex" ng-repeat="campaign in campaigns">
+        <div class="card card-body flex-fill box">
+                                <h3><img id="CampaignIcon" src={{campaign.img}} width="275" height="275" class="icon img-fluid" ng-show="{{campaign.img}}"/><br></h3>
+                               <p><b>{{campaign.campaignName}}</b></p>
+                               <p>Created on {{campaign.creationDate | date:'MMM dd, yyyy'}}</p>
+                               <p> {{campaign.campaignDescription}}</p>
+                               <p><b>Donation Goal: ${{campaign.campaignGoal}}</b></p>
+                               <p>Raised so far:<b style="color:blue"> ${{campaign.sofarGoal}}</b></p>
+                               <p>Donation Category: <b>{{campaign.type}}<b></p>
+                                <button type="button" class="btn btn-primary" ng-click="edit(campaign._id)">Edit Campaign</button>
+                           </div>
+                        </div> 
+        </div>
+
+  </div>
+      

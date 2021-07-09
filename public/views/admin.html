@@ -1,0 +1,126 @@
+<div ng-init="load()">
+ <h3>Welcome Admnistrator!</h3>
+ <br>
+ <br>
+
+  <form class="form-inline form-group">
+
+       <button type="button" class="btn btn-primary mr-4" ng-click="getUsers()">Manage Users</button>
+        <p class="mb-0 mr-2"><b>Manage Donation Campaigns:</b></p>
+       <select class="form-select mr-2 form-control" ng-model="selectedName" ng-options="item for item in names" ng-change="changetype(selectedName)" ng-disabled = "searchEntry"></select>     
+    </form>
+
+    <br>
+  <p class="mb-0 mr-2">Search Donation Campaigns By:</p>   
+  <br>
+
+<form class="form-inline form-group ">
+      <div class="form-check">
+      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" ng-model="searchselection"  ng-value = '"Zipcode"' ng-checked="true">
+      <label class="form-check-label mr-4" for="flexRadioDefault1">
+        <b>Zipcode</b> </label>
+    </div>
+
+       <div class="form-check">
+         <input class="form-check-input " type="radio" name="flexRadioDefault" id="flexRadioDefault2" ng-model="searchselection" ng-value = '"Campaign id"'>
+          <label class="form-check-label mr-4" for="flexRadioDefault2">
+        <b> Campaign id</b> </label>
+      </div>
+
+    <div class="form-check">
+        <input class="form-check-input " type="radio" name="flexRadioDefault" id="flexRadioDefault2" ng-model="searchselection" ng-value = '"Username"'>
+       <label class="form-check-label" for="flexRadioDefault2">
+        <b> username</b> </label>
+    </div>
+      <br>
+  </form >
+
+    <form class="form-inline"  name="adminPage">
+            <input type="text" class="form-control" placeholder="search" ng-model ="searchEntry"  required autofocus> 
+
+      
+              <div class="col">
+            <button type="button" class="btn btn-primary form-control" ng-click="search(searchselection)" ng-disabled="adminPage.$invalid">Search</button>
+          </div>  
+    </form>
+    <br>
+ 
+     <div class="form-row">
+     <div class="col">
+       <div ng-show="totalResults" class="alert alert-success mt-3 mb-0 form-control text-center"> Total Results : <b>{{totalResults}} </b></div>
+    </div>
+    </div>
+    <br>
+     <br>
+
+<form class="form-inline form-group" ng-show="campaignflag">
+  <table class="table table-hover hscroll" >
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Category</th>
+      <th scope="col">Zip Code</th>
+      <th scope="col">Campaign ID</th>
+      <th scope="col">Donation Goal</th>
+      <th scope="col">Collected</th>
+      <th scope="col">View</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="campaign in campaigns" >
+      <th scope="row" >{{$index + 1}}</th> <!--$index is given by angular js-->
+      <td>{{campaign.campaignName}}</td>
+      <td>{{campaign.type}}</td>
+      <td>{{campaign.zipCode}}</td>
+      <td>{{campaign._id}}</td>
+      <td>${{campaign.campaignGoal}}</td>
+      <td>${{campaign.sofarGoal}}</td>
+        <td> <button type="submit" class="btn btn-primary" ng-click="view(campaign._id)">View</button></td>
+         <td> <button type="submit" class="btn btn-danger mr-4" ng-click="deleteCampaign($index, campaign._id)">Delete</button></td>
+
+    </tr>
+  </tbody>
+</table>
+</form> 
+
+<form class="form-inline form-group "  ng-show="userflag">
+  <table class="table table-hover hscroll" >
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email</th>
+      <th scope = "col">Member Since</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="user in users"  >
+      <th scope="row" >{{$index + 1}}</th> <!--$index is given by angular js-->
+      <td>{{user.firstName}}</td>
+      <td>{{user.lastName}}</td>
+      <td>{{user.email}}</td>
+       <td> {{user.memberSinceDate | date:'MMM dd, yyyy'}}</td>
+      <td> <button type="submit" class="btn btn-danger mr-4" ng-click="deleteUser($index, user._id)">Delete</button></td>
+
+    </tr>
+  </tbody>
+</table>
+</form>
+
+     <div id="myDiv"  class="row " ng-show ="previewflag">
+        <div class="column">
+        <div class="card">
+                                <h3><img id="CampaignIcon" src={{value.img}} width="275" height="275" class="icon img-fluid "/><br></h3>
+                               <p><b>{{value.campaignName}}</b></p>
+                               <p> {{value.campaignDescription}}</p>
+                               <p><b>Campaign Goal: ${{value.campaignGoal}}</b></p>
+                               <p><b>Raised so far: ${{value.sofarGoal}}</b></p>
+                              <button type="submit" class="btn btn-primary" ng-click="reload()">Return</button>
+                           </div>
+                        </div> 
+        </div>
+</div>

@@ -1,0 +1,38 @@
+
+<form name="signinForm">
+
+   <div class="form-row">
+     <div class="col">
+      <h4 class = "text-center">DonAid Sign In</h4>
+     </div>
+  </div>
+  <br>
+
+   <div class="form-row">
+     <div class="col">
+      <input type="text" class="form-control" placeholder="email" ng-model ="userName" ng-minlength="3"  required autofocus> 
+     </div>
+  </div>
+  <br>
+   <div class="form-row">
+     <div class="col">
+       <input type="password" class="form-control" placeholder="Password" ng-model ="userPassword" ng-minlength="2"  required>
+    </div>
+    </div>
+    <br>
+    <div class="form-row"  >
+     <div class="col">
+        <button ng-click="userSignIn()" class="btn  btn-primary btn-block" type="button" ng-disabled="signinForm.$invalid" >Sign in</button>
+    </div>
+    </div>
+
+     <div class="form-row">
+     <div class="col">
+       <div ng-show="status" class="alert alert-danger mt-3 mb-0 form-control text-center"> {{ status }}</div>
+    </div>
+    </div>
+    <br>
+      <span>Don't have an account?</span><a href="#!/register" class="ml-1" >Register Here</a>
+ 
+</form>
+<br></br>

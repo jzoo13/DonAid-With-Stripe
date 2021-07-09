@@ -1,0 +1,70 @@
+<div ng-init="load()"> 
+<h4 class = "text-center">DonAid Campaign Submission</h4>
+      
+  <br>
+
+  <form class="form-inline form-group"">
+        <p class="mb-2 mr-2 ">Donation Campaign  Category:</p>
+        <select class="form-select mr-2 form-control" ng-model="selectedName" ng-options="item for item in names"></select>     
+    </form>
+
+<form name="campaignForm">
+   <div class="form-row">
+     <div class="col">
+      <input type="text" class="form-control" placeholder="Campaign Name" ng-model ="campaignName" ng-minlength="3" required>
+     </div>
+  </div>
+  <br>
+   <div class="form-row">
+      <div class="col">
+      <!--label for="exampleFormControlTextarea1"> Campaign Description</label-->
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" ng-model ="campaignDescription" placeholder="Campaign Description" required></textarea>
+      </div>
+  </div>
+   <br>
+   <div class="form-row">
+     <div class="col">
+      <input type="number" class="form-control" placeholder="Zip code" ng-model ="zipCode" ng-minlength="5"  ng-maxlength="5" required>
+     </div>
+  </div>
+  <br>
+    <div class="form-row">
+     <div class="col"> <!--validation to make sure a number is entered  and that the goal amount is at least greater than zero-->
+      <input type="number" class="form-control" placeholder="Fund Goal Amount $" ng-model ="fundGoal"  min="1" ng-minlength="1" required>
+     </div>
+  </div>
+  <br>
+ <!-- Uploaded image area-->
+
+ <div>
+  <!-- Uploaded image area   ng-disabled="campaignForm.$invalid" -->
+  <label><b>Upload photo to support your donation funding:</b></label><br>
+<input type="file" id="file" name="file" onchange = "validateFile()"/>
+</div>
+
+    <div class="form-row">
+     <div class="col">
+        <div id="status" class="alert alert-danger mt-3 mb-0 form-control text-center hidden"> </div>
+      </div>
+    </div>
+
+   <div class="form-row">
+     <div class="col">
+      <div id="imagePreview" class = "text-center mt-3 mb-0  hidden"></div>
+    </div>
+  </div>
+ <br>
+    <div class="form-row">
+     <div class="col">
+         <button type="button" class="btn btn-primary form-control btn-block" ng-click="add()" ng-disabled="campaignForm.$invalid"  >Create Campaign</button> 
+   </div>
+   </div>
+    <br>
+          <button class="btn btn-secondary form-control" ng-click="cancel()">Cancel</button> 
+  <br>
+ <br>
+ 
+ </form >
+ </div>
+
+

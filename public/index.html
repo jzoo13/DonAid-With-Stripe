@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+ 
+      <title>Donation Web Application</title>
+        <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+ 
+       <!--Stripe for taking payments-->
+       <script src="https://js.stripe.com/v3/"></script>
+       
+  </head>
+
+  <body ng-controller = "mainController" ng-init = "load()">
+
+ 
+  <!-- Scripts bootstrap and Jquery-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+ <div class="jumbotron jumbotron-fluid">
+   <div class= "container ">
+   <h2 class="text-center">DonAid! Giving With Heart!</h2>
+          <br>
+      <form class="form-inline form-group float-right form-row">
+         <!-- show the my campaigns option only when a user has been signed in (there is a user name valid) -->
+           <p class="mr-5 mb-1 " ng-show="sharingData.username"  ng-model = "sharingData.username"> Welcome, <b> {{sharingData.username}}!</b></p> </br>
+           <a class="mr-2 mb-1 btn btn-secondary float-left form-control"  href="#!/">Home</a>
+          <button type="button" class="mr-2 mb-1 btn btn-primary float-right form-control" ng-click="mycampaigns()" ng-show="sharingData.username" ng-model="campaignbtn">My Campaigns</button >
+          <button type="button" class="mr-2 mb-1 btn btn-primary float-right form-control" ng-click="createcampaign()"  ng-model="startcampaignbtn">Start Donation Campaign</button >
+           <button type="button" class="mr-2 mb-1 btn btn-primary float-right form-control" ng-click="login()" ng-model="sharingData.signbuttonText">{{sharingData.signbuttonText}}</button>     
+     </form>
+      <br>
+   </div>
+  <br>
+</div>
+
+    <!--this is where all the views are going to be injected into-->
+    <div class="container">
+       <div ng-view></div>
+       </div>
+       
+       <div class="alert alert-secondary ">
+         <small class= "float-right">Copyright 2021</small>
+          <br>
+     </div>
+
+      <!--a href="#!/campaign">Campaings</a-->
+    
+
+    <!--angularjs  and ngular router-->
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+   <script src= "https://code.angularjs.org/1.8.2/angular-route.min.js"> </script>
+  
+   <script>
+
+     var myApp = angular.module("myApp", ["ngRoute"]);
+
+      myApp.controller("mainController", function($scope,sharingData){
+       
+      //Bind the sharingData object with MainController $scope for dynamic updates of top view options 
+      $scope.sharingData = sharingData;
+
+       $scope.login = function(){
+    
+             //user pressed on either Log In or Log out option
+             if(sharingData.signbuttonText == "Log Out"){
+
+                  // user logged out so let's change the button back to log in and clear the shared data
+                   sharingData.signbuttonText = 'Log In';
+                   sharingData.username = undefined;
+                   sharingData.email= undefined;
+                   
+                    // remove the token and user name from local storage
+                   localStorage.removeItem('jwt');
+                   localStorage.removeItem('uname');
+                   localStorage.removeItem('uemail');
+                   alert("Loggind user out. JWT token deleted!");
+                   window.location = "#!/campaignhome";   //take user back to campaignhome page
+             }else{
+                   window.location = "#!/signin";  
+             }  
+        }
+ 
+          //user pressed on My Campaigns option
+          $scope.mycampaigns = function(){
+                 window.location = "#!/mycampaigns";  
+              }
+            //user pressed on Start Donation Campaign option
+           $scope.createcampaign = function(){
+             if(!sharingData.username){
+                   sharingData.directcampaigncreation = true;
+                    sharingData.directdonation = true;
+                   window.location = "#!/signin";  
+             }else{
+                    window.location = "#!/campaign";  
+             }
+          }
+
+           //checking weather active user session exists
+           $scope.load = function(){
+           
+               //to check weather a user sesson is currently active
+               //ideally I should place the username in jwt and be reading the data from the jwt here
+                if(localStorage.getItem("jwt"))
+                {
+                      sharingData.email= localStorage.getItem('uemail');
+                      sharingData.username = localStorage.getItem('uname');
+                      sharingData.signbuttonText = "Log Out";
+                }
+          }
+     })
+
+     myApp.config(function($routeProvider){
+
+      $routeProvider
+       .when("/",{
+           
+           templateUrl : "views/campaign_home.html",
+           controller: "campaignsHomeController"
+       })
+        .when("/register",{
+           templateUrl:  "views/register.html",
+           controller:   "registerController" 
+       })
+        .when("/signin",{
+           templateUrl: "views/signin.html",
+           controller:  "signinController" 
+       })
+        .when("/campaignhome", {
+            templateUrl: "views/campaign_home.html",
+            controller: "campaignsHomeController"
+          })
+       .when("/campaign",{
+           templateUrl:  "views/campaigns.html",
+           controller:  "campaignsController"
+       })
+          .when("/campaigndonation",{
+          templateUrl:  "views/campaign_donating.html",
+           controller:  "campaignDonationController"
+         })
+          .when("/mycampaigns",{
+          templateUrl:  "views/mycampaigns.html",
+           controller:  "MyCampaignsController"
+         })
+         .when("/updatecampaign",{
+          templateUrl:  "views/updatecampaign.html",
+           controller:  "updatecampaignController"
+         })
+          .when("/admin",{
+          templateUrl:  "views/admin.html",
+           controller:  "adminController"
+         })
+         .when("/payment_success",{
+          templateUrl:  "views/payment_success.html",
+           controller:  "payment_successController"
+         })
+     })
+
+//custom SharedData service to share data between controllers.
+//Uses this to initialize variables
+myApp.service("sharingData", function(){
+
+   this.username=""; //used to pass cuser name between controllers to show at main page of SPA
+   this.email =""; //used to pass user id between controllers
+   this.campaingid =""; //used to pass campaign id between controllers
+   this.signbuttonText ="Log In";  // will use same button to sign in/sign out logic
+   this.directcampaigncreation = false;  //weather the user initiated a campaign creation without signing in if so take directly there after signin
+    this.directdonation = false;  //weather the user initiated a donation without signing in if so take directly there after signin
+});
+
+  </script>
+
+  <body>
+    <!--importing all controllers here-->
+    <script src="/controllers/campaigns.js"></script>
+    <script src="/controllers/signin.js"></script>
+    <script src="/controllers/register.js"></script>
+    <script src="/controllers/campaign_home.js"></script>
+    <script src="/controllers/campaign_donating.js"></script>
+     <script src="/controllers/mycampaigns.js"></script>
+    <script src="/controllers/updatecampaign.js"></script>
+    <script src="/controllers/admin.js"></script>
+     <script src="/controllers/payment_success.js"></script>
+     
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<br>
+<h4 class = "text-center">DonAid Account Registration</h4>
+<br>
+<form name = "myRegistrationForm">
+   <div class="form-row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="First name" ng-model="newUserFirstname" ng-minlength="2" required autofocus>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Last name" ng-model="newUserLastname" ng-minlength="1" required>
+        </div>
+   </div> 
+   <br>
+<!-- need to decide if make email text or email type-->
+   <div class="form-row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Email Address" ng-model="newUserEmail" required ng-minlength="3"   >
+        </div>
+     </div>
+     <br>
+     <div class="form-row"> 
+        <div class="col">
+          <input type="password" class="form-control" placeholder="Password" ng-model="newUserPassword" required ng-minlength="1">
+        </div>
+  </div> 
+   <br>
+
+
+    <div class="form-row">
+     <div class="col">
+       <button type="button" class="btn btn-primary btn-block" ng-disabled="myRegistrationForm.$invalid" ng-click="newUser()">Create Account</button> 
+     
+    </div>
+    </div>
+    <br>
+
+   <div class="form-row">
+     <div class="col">
+       <div ng-show="status" class="alert alert-danger mt-3 mb-0 form-control text-center"> {{ status }}</div>
+    </div>
+       
+  </div>
+</form>
+<br>

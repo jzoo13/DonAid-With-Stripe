@@ -1,0 +1,31 @@
+<div ng-init="load()">
+  
+   <h3 class = "text-center">Available Donation Campaigns</h3>
+
+ <form class="form-inline form-group" >
+     
+        <p class="mb-0 mr-2 ">Donation Category:</p>
+       <select class="form-select mr-2 form-control" ng-model="selectedName" ng-options="item for item in names" ng-change="changetype(selectedName)"></select>     
+    </form>
+
+<!-- my dinamically created divs will go inside the below element -->
+<!-- using css for card box to ensure content is centered on boxes -->
+
+      <div id="myDiv"  class="row">
+        <div class="column  mb-4 d-flex" ng-repeat="campaign in campaigns">
+        <div class="card card-body flex-fill box">
+                                <h3><img id="CampaignIcon" src={{campaign.img}} width="275" height="275" class="icon img-fluid"  ng-show="{{campaign.img}}"/><br></h3>
+                               <p><b>{{campaign.campaignName}}</b></p>
+                               <p>Created on {{campaign.creationDate | date:'MMM dd, yyyy'}}</p>
+                               <p> {{campaign.campaignDescription}}</p>
+                               <p><b>Donation Goal: ${{campaign.campaignGoal}}</b></p>
+                               <p>Raised so far:<b style="color:blue"> ${{campaign.sofarGoal}}</b></p>
+                                  <p>Donation Category:<b> {{campaign.type}}</b></p>
+                              <button type="button" class="btn btn-primary" ng-click="donate(campaign._id)">Donate Now</button>
+                           </div>
+                        </div> 
+        </div>
+
+  </div>
+
+        

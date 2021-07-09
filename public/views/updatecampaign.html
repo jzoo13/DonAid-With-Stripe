@@ -1,0 +1,68 @@
+<br>
+<h4 class = "text-center">DonAid update Campaign</h4> 
+<br>
+
+<form class="form-inline form-group">
+
+        <p class="mb-0 mr-2">Donation Campaign Category:</p>
+       <select class="form-select mr-2 form-control" ng-model="selectedName" ng-options="item for item in names" ng-change="changetype(selectedName)"></select>     
+    </form>
+    
+<form name="campaignForm">
+  
+   <div class="form-row">
+     <div class="col">
+      <input type="text" class="form-control"  placeholder=" Campaign Title" ng-minlength="3" ng-model = "title" required>
+   </div>
+  </div>
+  <br>
+   <div class="form-row">
+      <div class="col">
+      <!--label for="exampleFormControlTextarea1"> Campaign Description</label-->
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" ng-model ="campaignDescription" placeholder=" Campaign Description"></textarea>
+      </div>
+  </div>
+   <br>
+   <div class="form-row">
+     <div class="col">
+      <input type="text" class="form-control" placeholder="Zip code" ng-model ="zipCode" ng-minlength="5"  ng-maxlength="5" required>
+     </div>
+  </div>
+  <br>
+   <div class="form-row">
+     <div class="col">
+      <input type="text" class="form-control" placeholder="Fund Goal Amount $" ng-model ="fundGoal"  required>
+     </div>
+  </div>
+  <br>
+ <!-- Uploaded image area-->
+ 
+  <!-- Uploaded image area   ng-disabled="campaignForm.$invalid" -->
+  <label><b>Change donation campaign Picture:</b></label><br>
+<input type="file" id="file" name="file" />
+
+ <br>
+ 
+    <div class="form-row">
+     <div class="col">
+        <div id="status" class="alert alert-danger mt-3 mb-0 form-control text-center hidden"> </div>
+      </div>
+    </div>
+
+   <div class="form-row">
+     <div class="col">
+      <div id="imagePreview" ng-model= "image"  ng-show="image !='false'" class = "text-center mt-3 mb-0 "></div>
+    </div>
+  </div>
+ <br>
+    <br>
+    <button class="btn btn-primary form-control" ng-click="updateCampaign()">Update Campaign</button> 
+    <br>
+    <br>
+      <button class="btn btn-danger form-control" ng-click="deleteCampaign()">Delete Campaign</button> 
+    <br>
+    <br>
+    <button class="btn btn-secondary form-control" ng-click="cancel()">Cancel</button> 
+  <br>
+</form >
+ <br>

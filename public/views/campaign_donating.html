@@ -1,0 +1,27 @@
+
+<div ng-init="load()">
+<h2>Please Submit Your Donation</h2><br>
+
+<!-- my dinamically created divs will go inside the below element -->
+    
+  <form  name="donationPage">   
+      <div id="myDiv"  class="row" ng-show = "value">
+        <div class="column">
+        <div class="card">
+                                <h3><img id="CampaignIcon" src={{value.img}} width="275" height="275" class="icon img-fluid "/><br></h3>
+                               <p><b>{{value.campaignName}}</b></p>
+                               <p> {{value.campaignDescription}}</p>
+                               <p><b>Campaign Goal: ${{value.campaignGoal}}</b></p>
+                                 <p>Raised so far:<b style="color:blue"> ${{value.sofarGoal}}</b></p>
+                             
+                        <input type="number" class="form-control" placeholder="Donation Amount $" ng-model="donationAmount" ng-minlength="1" ><br>
+                        <button type="button" class="btn btn-primary" ng-click="callStripe()"  ng-disabled="donationPage.$invalid">Donate Now</button>
+                             
+                              </form>
+                              <br>
+                               <button type="button" class="btn btn-secondary" ng-click="cancel()">Cancel</button><br>
+                           </div>
+                        </div> 
+        </div>
+     
+ </div>
