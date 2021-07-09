@@ -1,10 +1,9 @@
 
 /*
-    Lab:  Final Project - Donate Application
-    Class: CS 157 Javascript
+  
     Author: Julio Cuellar
-    Date: 6/2/2021 - Spring 2021
-    MEAN Full Stack Web Development
+    Spring 2021
+    DonAid - MEAN Full Stack Web Development
 */
 
 const bcrypt = require("bcrypt");
